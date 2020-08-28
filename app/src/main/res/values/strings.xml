@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">TodoCalendar</string>
+    <string name="task_name">タスク名</string>
+    <string name="task_explan">説明</string>
+    <string name="task_input_prompt">タスクの情報を入力してください</string>
+    <string name="task_nameinput_prompt">タスクの題名を入力してください</string>
+    <string name="task_explaninput_prompt">タスクの詳細を入力してください</string>
+    <string name="task_severity">重要度</string>
+    <string name="task_achievement_degrees">達成状況</string>
+    <string name="severity_high">高</string>
+    <string name="severity_mid">中</string>
+    <string name="severity_low">低</string>
+    <string name="achieve_yes">達成</string>
+    <string name="achieve_no">未達成</string>
+    <string name="task_enddate">締め切り日</string>
+    <string name="task_endday">締め切り日時</string>
+    <string name="task_endtime">締め切り時刻</string>
+    <string name="task_endtime_select">日時入力</string>
+    <string name="task_commit">登録</string>
+    <string name="back">戻る</string>
+    <string name="sort_taskName">タスク名でソート</string>
+    <string name="sort_severity">重要度でソート</string>
+    <string name="sort_achievement">達成状況でソート</string>
+    <string name="sort_enddate">締め切り日時でソート</string>
+    <string name="menu_end">閉じる</string>
+    <string name="easy_add">今日の予定</string>
+    <string name="invisible_tasklow">達成済みタスクを非表示にする</string>
+    <string name="visible_tasklow">達成済みタスクを表示する</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

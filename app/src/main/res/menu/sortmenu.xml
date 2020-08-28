@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.optiontest.MainActivity">
+
+    <item
+        android:id="@+id/invisible_tasklow"
+        android:orderInCategory="100"
+        android:title="@string/invisible_tasklow"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_end"
+        android:orderInCategory="100"
+        android:title="@string/menu_end"
+        app:showAsAction="never" />
+
+
+</menu>
