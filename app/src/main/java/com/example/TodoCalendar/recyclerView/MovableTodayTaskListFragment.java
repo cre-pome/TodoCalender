@@ -28,7 +28,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MovableTaskListFragment extends Fragment {
+public class MovableTodayTaskListFragment extends Fragment {
     // DBのクラスとヘルパー
     private TaskDBHelper helper;
     private SQLiteDatabase db;
@@ -66,14 +66,14 @@ public class MovableTaskListFragment extends Fragment {
 
         // 前回の非表示フラグを取得
         preferences = getContext().getSharedPreferences("TodoConf", Context.MODE_PRIVATE);
-        hideAchevedTask = preferences.getBoolean("hideAchevedTask", false);
+        hideAchevedTask = preferences.getBoolean("hideTodayAchevedTask", false);
 
         if(db == null){
             db = helper.getReadableDatabase();
         }
 
         // タスクのリストを取得する
-        taskList = TaskDBManager.makeTaskRowDataList(db, false);
+        taskList = TaskDBManager.makeTaskRowDataList(db, true);
 
         // タスクリストをソートする
         String sortKey = preferences.getString("sortKey", "endDate");
@@ -203,15 +203,15 @@ public class MovableTaskListFragment extends Fragment {
 
         // 設定ファイルに現在の非表示フラグを保存する
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("hideAchevedTask", hideAchevedTask);
+        editor.putBoolean("hideTodayAchevedTask", hideAchevedTask);
         editor.apply();
 
         // 達成済みのタスクリストのみを取得する
         taskList.clear();
         if (hideAchevedTask) {
-            taskList.addAll(TaskDBManager.readNoAchevedTask(db, false));
+            taskList.addAll(TaskDBManager.readNoAchevedTask(db, true));
         } else {
-            taskList.addAll(TaskDBManager.makeTaskRowDataList(db, false));
+            taskList.addAll(TaskDBManager.makeTaskRowDataList(db, true));
         }
 
         // 前のソート条件でソート
@@ -333,7 +333,7 @@ public class MovableTaskListFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putSerializable("beforeList", taskList);
-        outState.putBoolean("hideAchevedTask", hideAchevedTask);
+        outState.putBoolean("hideTodayAchevedTask", hideAchevedTask);
         super.onSaveInstanceState(outState);
     }
 

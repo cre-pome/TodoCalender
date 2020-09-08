@@ -89,24 +89,38 @@ public class MainActivity extends AppCompatActivity {
                 // 参照するリソースは上でリソースファイルに付けた名前と同じもの
                 getMenuInflater().inflate(R.menu.sortmenu, menu);
 
-                final MenuItem changeInvisible = menu.getItem(0);
+                MenuItem changeInvisible = menu.getItem(0);
 
                 SharedPreferences preferences = getSharedPreferences("TodoConf", Context.MODE_PRIVATE);
-                boolean hideAchevedTask = preferences.getBoolean("hideAchevedTask", false);
+                boolean hideAchevedTask = preferences.getBoolean("hideTodayAchevedTask", false);
 
-                if (hideAchevedTask) {
-                    changeInvisible.setTitle(getString(R.string.visible_tasklow));
-                } else {
-                    changeInvisible.setTitle(getString(R.string.invisible_tasklow));
-                }
+                setOptionMennu (changeInvisible, hideAchevedTask);  // 表示・非表示を変更
+                return super.onCreateOptionsMenu(menu);
 
+            case 2:
+                // 参照するリソースは上でリソースファイルに付けた名前と同じもの
+                getMenuInflater().inflate(R.menu.sortmenu, menu);
 
+                changeInvisible = menu.getItem(0);
 
+                preferences = getSharedPreferences("TodoConf", Context.MODE_PRIVATE);
+                hideAchevedTask = preferences.getBoolean("hideAchevedTask", false);
+
+                setOptionMennu (changeInvisible, hideAchevedTask); // 表示・非表示を変更
                 return super.onCreateOptionsMenu(menu);
         }
 
         return false;
 
+    }
+
+    // オプションメニュー内の達成タスクの表示・非表示を切り替える
+    private void setOptionMennu(MenuItem menuItem, boolean invisiFlg){
+        if (invisiFlg) {
+            menuItem.setTitle(getString(R.string.visible_tasklow));
+        } else {
+            menuItem.setTitle(getString(R.string.invisible_tasklow));
+        }
     }
 
     @Override

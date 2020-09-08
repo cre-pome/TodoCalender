@@ -78,16 +78,36 @@ public class TaskDBManager {
     }
 
     // DBからタスクデータを取得してTaskRowDateのリストを返す
-    static public ArrayList<TaskRowData> makeTaskRowDataList(SQLiteDatabase db){
+    static public ArrayList<TaskRowData> makeTaskRowDataList(SQLiteDatabase db, boolean todayFlg){
         ArrayList<TaskRowData> taskRowDataList = new ArrayList<TaskRowData>();
 
         String order_by = "update_date DESC";
 
+        String selection = null;
+        String[] selectionArgs = new String[2];
+
+        Date dateObj = new Date();
+
+        SimpleDateFormat formatStart = new SimpleDateFormat( "yyyy/MM/dd 00:00:00" );
+        String todayStart = formatStart.format( dateObj );
+
+        SimpleDateFormat formatEnd = new SimpleDateFormat( "yyyy/MM/dd 23:59:59" );
+        String todayEnd = formatEnd.format( dateObj );
+
+        if (todayFlg) {
+            selection = " ?>= end_date AND end_date >= ?";
+            selectionArgs[0] = todayEnd;
+            selectionArgs[1] = todayStart;
+        } else {
+            selectionArgs = null;
+        }
+
+
         Cursor cursor = db.query(
                 "task_db",
                 new String[] {"_id", "name", "exp", "severity" , "achieve", "end_date", "notifi", "notifi_time", "notifi_kind"},
-                null,
-                null,
+                selection ,
+                selectionArgs,
                 null,
                 null,
                 order_by
@@ -130,14 +150,37 @@ public class TaskDBManager {
 
 
     // DBから達成していないタスクデータを取得する
-    static public ArrayList<TaskRowData> readNoAchevedTask(SQLiteDatabase db){
+    static public ArrayList<TaskRowData> readNoAchevedTask(SQLiteDatabase db, boolean todayFlg){
 
         // ListViewに表示するリスト項目をArrayListで準備する
         ArrayList<TaskRowData> taskRowDataList = new ArrayList<TaskRowData>();
 
         Log.d("debug","**********Cursor");
-        String selection = "achieve = ?";
-        String[] selectionArgs = {"0"};
+        String selection;
+        String[] selectionArgs;
+
+        Date dateObj = new Date();
+
+        SimpleDateFormat formatStart = new SimpleDateFormat( "yyyy/MM/dd 00:00:00" );
+        String todayStart = formatStart.format( dateObj );
+
+        SimpleDateFormat formatEnd = new SimpleDateFormat( "yyyy/MM/dd 23:59:59" );
+        String todayEnd = formatEnd.format( dateObj );
+
+        if (todayFlg) {
+            selection = "achieve = ? AND ?>= end_date AND end_date >= ?";
+            selectionArgs =  new String[3];
+            selectionArgs[0] = "0";
+            selectionArgs[1] = todayEnd;
+            selectionArgs[2] = todayStart;
+
+        } else {
+            selection = "achieve = ?";
+            selectionArgs = new String[1];
+            selectionArgs[0] = "0";
+        }
+
+
 
         Cursor cursor = db.query(
                 "task_db",

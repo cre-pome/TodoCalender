@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TodoCalendar</string>
+    <string name="app_name">タスク管理アプリr</string>
     <string name="task_name">タスク名</string>
     <string name="task_explan">説明</string>
     <string name="task_input_prompt">タスクの情報を入力してください</string>
